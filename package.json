@@ -1,0 +1,25 @@
+{
+  "name": "isp_project",
+  "version": "1.0.0",
+  "description": "This is a website for isp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/app.ts"
+  },
+  "author": "Usman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mssql": "^9.3.2",
+    "mysql2": "^3.6.5",
+    "nodemon": "^3.0.2",
+    "pug": "^3.0.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "^5.3.2"
+  }
+}

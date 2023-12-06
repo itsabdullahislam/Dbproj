@@ -1,0 +1,173 @@
+
+body {
+    font-family: 'Baloo Bhai', cursive;
+    color: rgb(180 162 255);
+    margin: 0px;
+    padding: 0px;
+    
+}
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.header {
+    
+    margin: 177px;
+    position: absolute;
+    right: -177px;
+    width: 1521px;
+    top: -203px;
+    z-index: 10;
+}
+.left {
+    display: inline-block;
+    /* border: 2px solid red; */
+    position: absolute;
+    left: 80px;
+    top: 54px;
+}
+
+.left img {
+    width: 96px;
+    margin: -30%;
+
+}
+
+.left div {
+    line-height: 19px;
+    font-size: 26px;
+    position: relative;
+    right: -50px;
+    top: -60px;
+}
+
+.mid {
+    display: block;
+    width: 60%;
+    margin: 29px auto;
+    /* border: 2px solid green; */
+}
+
+.right {
+    position: absolute;
+    right: 28px;
+    top: 48px;
+    display: inline-block;
+    /* border: 2px solid yellow; */
+}
+
+.navbar {
+    display: inline-block;
+}
+
+.navbar li {
+    display: inline-block;
+    font-size: 25px;
+}
+
+.navbar li a {
+    color: rgb(232 42 209);
+    text-decoration: none;
+    padding: 34px 23px;
+
+}
+
+.navbar li a:hover,
+.navbar li a.active {
+    
+    color: rgb(57, 214, 241);
+
+}
+
+.btn {
+    font-family: 'Baloo Bhai', cursive;
+    margin: 0px 9px;
+    background-color: black;
+    color: rgb(226, 176, 221);;
+    padding: 4px 14px;
+    border: 2px solid grey;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgb(31, 30, 30);
+}
+.footer {
+    display: inline-block;
+    background-color: rgb(108, 15, 97);
+    position: relative;
+    top: 287px;
+    width: 100%;
+}
+.footer div{
+    display: inline-block;
+    
+}
+.footer div.fleft{
+    text-decoration: underline;
+    margin: -2px 831px 0px 49px;
+    font-size: 25px;
+}
+.footer div.fright{
+    
+    margin: 0px 22px 0px 0px;
+}
+
+.packages {
+   
+    padding: 0px 0px 0px 1px;
+    width: 62%;
+    position: relative;
+    top: 180px;
+    left: 284px;
+
+}
+
+.packages div{
+    width: 96%;
+    font-family: 'Black Ops One',cursive;
+    /* display: inline-block; */
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 135px;
+    margin: 15px;
+}
+.packages div.propose li{
+    list-style-type: none;
+}
+.packages div.propose{
+    border: none;
+}
+.packages div.propose li button.purchase{
+    background-color: #bd75dd;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Baloo Bhai', cursive;
+    cursor: pointer;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #8d0c9f;
+    border: 2px solid #400951;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.modal button{
+    background-color: #9b59a4;
+    border-radius: 8px;
+    position: relative;
+    left: 154px;
+}
