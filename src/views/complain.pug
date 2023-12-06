@@ -6,6 +6,7 @@
     <title>ISP</title>
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="technicians.css">
+    link(rel="stylesheet", href="complain.css")
 </head>
 
 <body>
@@ -31,8 +32,24 @@
                 <li><a href="complain"class="active">complains</a></li>
             </ul>
         </div>
-
+    
     </header>
+    <form action ="/complain" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+    
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    
+        <label for="complaint">Complaint:</label>
+        <textarea id="complaint" name="complaint" required></textarea>
+    
+        <button type="submit">Submit</button>
+    </form>
+    
 
     <footer class="footer">
         <div class="fleft">

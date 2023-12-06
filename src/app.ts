@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import express from "express";
 import { User } from "./models/user";
 import { Technician } from "./models/technician";
+import { Complain } from "./models/complain";
 
 
 const app = express();
@@ -81,13 +82,31 @@ app.post('/signup', async (req, res) => {
 
     res.status(200)
 
-    res.render('login.pug');
+    res.redirect('login.pug');
   } catch (error) {
     console.error('Error saving user to the database:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+app.post('/complain', async (req, res) => {
+  try {
+    const {   firstname,lastname,complain, email } = req.body;
+    
+    const user = new Complain();
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.email = email;
+    user.complain = complain;
 
+    await AppDataSource.manager.save(user);
+
+    res.status(200)
+    
+  } catch (error) {
+    console.error('Error saving user to the database:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 app.post('/', async (req, res) => {
   try {
     const {  password, email } = req.body;
