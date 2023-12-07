@@ -4,6 +4,7 @@ import express from "express";
 import { User } from "./models/user";
 import { Technician } from "./models/technician";
 import { Complain } from "./models/complain";
+import { Packages } from "./models/packages";
 
 
 const app = express();
@@ -59,6 +60,9 @@ app.get('/complain', (req, res) => {
 app.get('/signup', (req, res) => {
   res.render("signup.pug");
 });
+app.get('/packagesbill', (req, res) => {
+  res.render("packagesbill.pug");
+});
 
 
 app.get('/aboutus', (req, res) => {
@@ -103,6 +107,25 @@ app.post('/complain', async (req, res) => {
     await AppDataSource.manager.save(user);
 
     res.status(200)
+    
+  } catch (error) {
+    console.error('Error saving user to the database:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.post('/packagesbill', async (req, res) => {
+  try {
+    const {firstname,lastname,email,contact } = req.body;
+    
+    const user = new Packages();
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.contact = contact;
+    user.email = email;
+
+    await AppDataSource.manager.save(user);
+
+    res.status(200).render('packagesbill.pug');
     
   } catch (error) {
     console.error('Error saving user to the database:', error);
@@ -166,33 +189,34 @@ app.post('/', async (req, res) => {
 
 
 
-// app.get('/technician', async (req, res) => {
-//   try {
-//     const {  location } = req.body
+app.get('/technician', async (req, res) => {
+  try {
+    const {  location } = req.body
     
-// const technicianLocations = await AppDataSource.getRepository(Technician).findOneBy({
-//     location
-// })
+const technicianLocations = await AppDataSource.getRepository(Technician).findOneBy({
+    location
+})
 
-// console.log(technicianLocations);
+console.log(technicianLocations);
 
-//     if (technicianLocations) {
-//       res.render('technicians',{ technicians: technicianLocations });
-      
-//     }
+    if (technicianLocations) {
+      res.render('technicians',{ technicians: technicianLocations });
 
-//     if (!technicianLocations) {
-//       console.log("no one was found in the area");
 
-//       }
+    }
 
-//     res.status(200)
+    if (!technicianLocations) {
+      console.log("no one was found in the area");
 
-//   } catch (error) {
-//     console.error('Error saving user to the database:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
+      }
+
+    res.status(200)
+
+  } catch (error) {
+    console.error('Error saving user to the database:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 // app.post('/technician', async (req, res) => {
@@ -210,27 +234,27 @@ app.post('/', async (req, res) => {
 //   }
 // });
 
-app.get("/technicians/view", async (req, res) => {
-  const location = req.query.location as string; // Assuming the location is sent as a query parameter
+// app.get("/technician", async (req, res) => {
+//   const location = req.body; // Assuming the location is sent as a query parameter
 
-  if (!location) {
-    return res.status(400).json({ error: 'Location parameter is missing' });
-  }
+//   if (!location) {
+//     return res.status(400).json({ error: 'Location parameter is missing' });
+//   }
 
-  try {
-    const technicianRepository = AppDataSource.getRepository(Technician);
+//   try {
+//     const technicianRepository = AppDataSource.getRepository(Technician);
 
-    const technicians = await technicianRepository
-      .createQueryBuilder('technician')
-      .where('technician.location = :location', { location })
-      .getMany();
+//     const technicians = await technicianRepository
+//       .createQueryBuilder('technician')
+//       .where('technician.location = :location', { location })
+//       .getMany();
 
-    res.render("technicians", { technicians }); // Ensure that the Pug file is correct
-  } catch (error) {
-    console.error('Error fetching technicians:', error);
-    res.status(500).json({ error: 'Error fetching technicians' });
-  }
-});
+//     res.render("technicians", { technicians }); // Ensure that the Pug file is correct
+//   } catch (error) {
+//     console.error('Error fetching technicians:', error);
+//     res.status(500).json({ error: 'Error fetching technicians' });
+//   }
+// });
 
 
 app.listen(port, () => {

@@ -24,6 +24,10 @@ html(lang="en")
           li: a(href="technician", class="active") Technicians
           li: a(href="packages") Packages
           li: a(href="complain") Complains
+    form(action="/technicians/view" method="post")
+  label(for="location") Location:
+  input(type="text" id="location" name="location" required)
+  button(type="submit") Search
 
     table
       thead
