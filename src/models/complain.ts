@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
 import "reflect-metadata"
 
+
 @Entity()
 export class Complain {
     @PrimaryGeneratedColumn()

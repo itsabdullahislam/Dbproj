@@ -1,52 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISP</title>
-    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="technicians.css">
-</head>
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title ISP
+    link(href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="technicians.css")
 
-<body>
-    <video id="video-background" autoplay muted loop>
-        
-        <source src="/technicians.mp4" type="video/mp4">
+  body
+    video#video-background(autoplay, muted, loop)
+      source(src="/technicians.mp4", type="video/mp4")
 
-    </video>
-    <header class="header">
-        <!-- Left box for logo -->
-        <div class="left">
-            <img src="/logo.png" alt="">
+    header.header
+      // Left box for logo
+      div.left
+        img(src="/logo.png", alt="")
 
+      // Mid box for navbar
+      div.mid
+        ul.navbar
+          li: a(href="home") Home
+          li: a(href="aboutus") About Us
+          li: a(href="technician", class="active") Technicians
+          li: a(href="packages") Packages
+          li: a(href="complain") Complains
 
-        </div>
-        <!-- Mid box for navbar -->
-        <div class="mid">
-            <ul class="navbar">
-                <li><a href="home" >Home</a></li>
-                <li><a href="aboutus" >About Us</a></li>
-                <li><a href="technician"class="active">Technicians</a></li>
-                <li><a href="packages">packages</a></li>
-                <li><a href="complain">complains</a></li>
-            </ul>
-        </div>
+    table
+      thead
+        tr
+          th First Name
+          th Last Name
+          th Email
+          th Age
+          th Contact
+          th Qualification
+          th NIC
+          th Location
+          th Address
+          th Gender
+          th Working Hours
+      tbody
+        each technician in technicians
+          tr
+            td= technician.firstname
+            td= technician.lastname
+            td= technician.email
+            td= technician.age
+            td= technician.contact
+            td= technician.qualification
+            td= technician.nic
+            td= technician.location
+            td= technician.adress
+            td= technician.gender
+            td= technician.available
 
-        <!-- Right box for buttons -->
-        
-    </header>
+    footer.footer
+      div.fleft
+        h3 Internet services provider
 
-    <footer class="footer">
-        <div class="fleft">
-            <h3>Internet services provider</h3>
-
-        </div>
-        <div class="fright">
-            <h6>To Connect : k214896@nu.edu.pk/k213307@nu.edu.pk</h6>
-
-        </div>
-    </footer>
-
-    
-</body>
-</html>
+      div.fright
+        h6 To Connect : k214896@nu.edu.pk/k213307@nu.edu.pk

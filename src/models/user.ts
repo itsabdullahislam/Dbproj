@@ -22,7 +22,6 @@ export class User {
 
     @Column()
     nic: number
-   
     @Column()
     contact: number
 

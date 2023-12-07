@@ -25,8 +25,10 @@ const AppDataSource = new DataSource({
   password: "root123",
   database: "isp_project",
   entities: ["models/**/*.ts"],
-  synchronize: true,
+  synchronize: true
 })
+
+
 
 AppDataSource.initialize()
   .then(() => {   
@@ -82,7 +84,7 @@ app.post('/signup', async (req, res) => {
 
     res.status(200)
 
-    res.redirect('login.pug');
+    res.redirect('/');
   } catch (error) {
     console.error('Error saving user to the database:', error);
     res.status(500).send('Internal Server Error');
@@ -90,7 +92,7 @@ app.post('/signup', async (req, res) => {
 });
 app.post('/complain', async (req, res) => {
   try {
-    const {   firstname,lastname,complain, email } = req.body;
+    const {firstname,lastname,complain,email } = req.body;
     
     const user = new Complain();
     user.firstname = firstname;
@@ -161,33 +163,76 @@ app.post('/', async (req, res) => {
 //   }
 // });
 
-app.post('/technician', async (req, res) => {
-  try {
-    const {  location } = req.body
+
+
+
+// app.get('/technician', async (req, res) => {
+//   try {
+//     const {  location } = req.body
     
-const technicianLocations = await AppDataSource.getRepository(Technician).findBy({
-    location
-})
+// const technicianLocations = await AppDataSource.getRepository(Technician).findOneBy({
+//     location
+// })
 
-console.log(technicianLocations);
+// console.log(technicianLocations);
 
-    if (technicianLocations) {
-      console.log(technicianLocations);
+//     if (technicianLocations) {
+//       res.render('technicians',{ technicians: technicianLocations });
       
-    }
+//     }
 
-    if (!technicianLocations) {
-      console.log("no one was found in the area");
+//     if (!technicianLocations) {
+//       console.log("no one was found in the area");
 
-      }
+//       }
 
-    res.status(200)
+//     res.status(200)
 
+//   } catch (error) {
+//     console.error('Error saving user to the database:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+
+// app.post('/technician', async (req, res) => {
+//   try {
+//     const { location } = req.body;
+    
+//     const technicianLocations = await AppDataSource.getRepository(Technician).findBy({
+//       location
+//     });
+
+//     res.render('technicians.pug', { technicians: technicianLocations });
+//   } catch (error) {
+//     console.error('Error retrieving technicians:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+app.get("/technicians/view", async (req, res) => {
+  const location = req.query.location as string; // Assuming the location is sent as a query parameter
+
+  if (!location) {
+    return res.status(400).json({ error: 'Location parameter is missing' });
+  }
+
+  try {
+    const technicianRepository = AppDataSource.getRepository(Technician);
+
+    const technicians = await technicianRepository
+      .createQueryBuilder('technician')
+      .where('technician.location = :location', { location })
+      .getMany();
+
+    res.render("technicians", { technicians }); // Ensure that the Pug file is correct
   } catch (error) {
-    console.error('Error saving user to the database:', error);
-    res.status(500).send('Internal Server Error');
+    console.error('Error fetching technicians:', error);
+    res.status(500).json({ error: 'Error fetching technicians' });
   }
 });
+
+
 app.listen(port, () => {
   console.log(`The application started successfully on port ${port}`);
 });
