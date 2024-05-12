@@ -18,15 +18,15 @@ app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/static"));
 
 const AppDataSource = new DataSource({
-  type: "postgres",
+  type: "mysql",
   host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "test123",
-  database: "postgres",
-  entities: [User,Technician,Complain,Packages],
-  synchronize: true,
-});
+  port: 3306,
+  username: "root",
+  password: "root123",
+  database: "isp_project",
+  entities: [User,Complain,Packages,Technician],
+  synchronize: true
+})
 
 AppDataSource.initialize()
   .then(() => {
@@ -112,7 +112,8 @@ app.post("/complain", async (req, res) => {
 
     await AppDataSource.manager.save(user);
 
-    res.status(200);
+    return res.render('complain.pug',);
+
   } catch (error) {
     console.error("Error saving user to the database:", error);
     res.status(500).send("Internal Server Error");
@@ -136,86 +137,29 @@ app.post("/packagesbill", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-app.post("/", async (req, res) => {
+app.post('/', async (req, res) => {
   try {
-    const { email } = req.body;
-
-    console.log("email", email);
-    
+    const { email, password } = req.body;
 
     const userRepository = AppDataSource.getRepository(User);
 
     const existingUser = await userRepository.findOneBy({ email });
 
     if (existingUser) {
-      res.redirect("/home");
+      if (existingUser.password === password) {
+        return res.redirect("/home");
+      } else {
+        return res.render('login.pug', { alert: "Incorrect password" });
+      }
+    } else {
+      return res.redirect("/signup");
     }
-
-    if (!existingUser) {
-      res.redirect("/signup");
-    }
-
-    res.status(200);
-
-    res.render("login.pug");
   } catch (error) {
-    console.error("Error saving user to the database:", error);
-    res.status(500).send("Internal Server Error");
+    console.error('Error handling login:', error);
+    return res.status(500).send('Internal Server Error');
   }
 });
 
-// app.post('/technician', async (req, res) => {
-//   try {
-
-// const { firstname, lastname, qualification, email,age , nic, contact, adress, gender,available,location } = req.body;
-
-// const user = new Technician();
-// user.firstname = firstname;
-// user.lastname = lastname;
-// user.email = email;
-// user.qualification = qualification;
-// user.age = age;
-// user.nic = nic;
-// user.contact = contact;
-// user.adress = adress;
-// user.gender = gender;
-// user.available=available
-// user.location=location
-
-// await AppDataSource.manager.save(user);
-//     res.status(200) }
-//  catch (error) {
-//     console.error('Error saving user to the database:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
-
-// app.get("/technician", async (req, res) => {
-//   try {
-//     const { location } = req.body;
-
-//     const technicianLocations = await AppDataSource.getRepository(
-//       Technician
-//     ).findOneBy({
-//       location,
-//     });
-
-//     console.log(technicianLocations);
-
-//     if (technicianLocations) {
-//       res.render("technicians", { technicians: technicianLocations });
-//     }
-
-//     if (!technicianLocations) {
-//       console.log("no one was found in the area");
-//     }
-
-//     res.status(200);
-//   } catch (error) {
-//     console.error("Error saving user to the database:", error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
 
 app.get("/technicians", async (req, res) => {
   try {
@@ -235,43 +179,6 @@ app.get("/technicians", async (req, res) => {
   }
 });
 
-
-// app.post('/technician', async (req, res) => {
-//   try {
-//     const { location } = req.body;
-
-//     const technicianLocations = await AppDataSource.getRepository(Technician).findBy({
-//       location
-//     });
-
-//     res.render('technicians.pug', { technicians: technicianLocations });
-//   } catch (error) {
-//     console.error('Error retrieving technicians:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
-
-// app.get("/technician", async (req, res) => {
-//   const location = req.body; // Assuming the location is sent as a query parameter
-
-//   if (!location) {
-//     return res.status(400).json({ error: 'Location parameter is missing' });
-//   }
-
-//   try {
-//     const technicianRepository = AppDataSource.getRepository(Technician);
-
-//     const technicians = await technicianRepository
-//       .createQueryBuilder('technician')
-//       .where('technician.location = :location', { location })
-//       .getMany();
-
-//     res.render("technicians", { technicians }); // Ensure that the Pug file is correct
-//   } catch (error) {
-//     console.error('Error fetching technicians:', error);
-//     res.status(500).json({ error: 'Error fetching technicians' });
-//   }
-// });
 
 app.listen(port, () => {
   console.log(`The application started successfully on port ${port}`);
