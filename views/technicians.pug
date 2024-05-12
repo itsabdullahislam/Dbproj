@@ -1,0 +1,64 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title ISP
+    link(href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="technicians.css")
+
+  body
+    video#video-background(autoplay, muted, loop)
+      source(src="/technicians.mp4", type="video/mp4")
+
+    header.header
+      // Left box for logo
+      div.left
+        img(src="/logo.png", alt="")
+
+      // Mid box for navbar
+      div.mid
+        ul.navbar
+          li: a(href="home") Home
+          li: a(href="aboutus") About Us
+          li: a(href="technician", class="active") Technicians
+          li: a(href="packages") Packages
+          li: a(href="complain") Complains
+
+    // Centered table container
+    div.table-container
+      table
+        thead
+          tr
+            th First Name
+            th Last Name
+            th Email
+            th Age
+            th Contact
+            th Qualification
+            th NIC
+            th Location
+            th Address
+            th Gender
+            th Working Hours
+        tbody
+          each technician in technicians
+            tr
+              td= technician.firstname
+              td= technician.lastname
+              td= technician.email
+              td= technician.age
+              td= technician.contact
+              td= technician.qualification
+              td= technician.nic
+              td= technician.location
+              td= technician.adress
+              td= technician.gender
+              td= technician.available
+
+    footer.footer
+      div.fleft
+        h3 Internet services provider
+
+      div.fright
+        h6 To Connect : k214896@nu.edu.pk/k213307@nu.edu.pk
